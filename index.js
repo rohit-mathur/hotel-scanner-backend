@@ -15,6 +15,9 @@ app.use(cors());
 // app.set("view engine", "hbs");
 app.get("/", (req, res) => res.send("Hello"));
 app.post("/sendCheckInEmail", (req, res) => {
+  console.log("req", req);
+  console.log("req body", req.body);
+  console.log("req body to", req.body.to);
   const { from, to, subject } = req.body;
   const emailInfo = {
     from,
