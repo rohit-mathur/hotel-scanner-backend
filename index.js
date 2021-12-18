@@ -22,8 +22,8 @@ app.post("/sendCheckInEmail", (req, res) => {
   <p><b>Email: ${req.body.email}</b></p>
   <p><b>Check In Date: ${req.body.checkinDate}</b></p>
   <p><b>Check Out Date: ${req.body.checkoutDate}</b></p>
-  <p><b>Adults: ${req.body.guests.adults}</b></p>
-  <p><b>Children: ${req.body.guests.children}</b></p>`;
+  <p><b>Adults: ${req.body.guests ? req.body.guests.adults : 0}</b></p>
+  <p><b>Children: ${req.body.guests ? req.body.guests.children : 0}</b></p>`;
 
   main(emailInfo).catch(console.error);
   res.status(201).send("Sent");
