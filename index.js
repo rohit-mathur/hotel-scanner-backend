@@ -1,37 +1,42 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
+const bodyParser = require("body-parser");
 // const hbs = require("express-handlebars");
 // const path = require("path");
-const fs = require("fs");
 
 const app = express();
 
+app.use(
+  bodyParser.urlencoded({
+    extended: true
+  })
+);
 app.use(express.json());
 app.use(cors());
 
 // app.engine("hbs", hbs({ extname: "hbs", defaultLayout: "templates" }));
 // app.set("templates", path.join(__dirname, "templates"));
 // app.set("view engine", "hbs");
-app.get("/", (req, res) => res.send("Hello"));
+app.get("/", (req, res) => res.send("Hello World"));
 app.post("/sendCheckInEmail", (req, res) => {
   console.log("req", req);
   console.log("req body", req.body);
-  console.log("req body to", req.body.to);
+
   const { from, to, subject } = req.body;
   const emailInfo = {
     from,
     to,
     subject
   };
+
   emailInfo.html = `<h4>Enquiry Form Details</h4>
   <p><b>Name: ${req.body.name}</b></p>
   <p><b>Mobile No.: ${req.body.number}</b></p>
   <p><b>Email: ${req.body.email}</b></p>
   <p><b>Check In Date: ${req.body.checkinDate}</b></p>
   <p><b>Check Out Date: ${req.body.checkoutDate}</b></p>
-  <p><b>Adults: ${req.body.guests ? req.body.guests.adults : 0}</b></p>
-  <p><b>Children: ${req.body.guests ? req.body.guests.children : 0}</b></p>`;
+  `;
 
   main(emailInfo).catch(console.error);
   res.status(201).send("Sent");
