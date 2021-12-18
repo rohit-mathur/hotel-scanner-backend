@@ -4,7 +4,6 @@ const cors = require("cors");
 // const hbs = require("express-handlebars");
 // const path = require("path");
 const fs = require("fs");
-const checkInTemplate = fs.readFileSync("src/templates/checkIn.html");
 
 const app = express();
 
@@ -14,7 +13,7 @@ app.use(cors());
 // app.engine("hbs", hbs({ extname: "hbs", defaultLayout: "templates" }));
 // app.set("templates", path.join(__dirname, "templates"));
 // app.set("view engine", "hbs");
-
+app.get("/", (req, res) => res.send("Hello"));
 app.post("/sendCheckInEmail", (req, res) => {
   const emailInfo = req.body;
   emailInfo.html = `<h4>Enquiry Form Details</h4>
